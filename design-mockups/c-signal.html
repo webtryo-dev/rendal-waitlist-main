@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Direction C — Signal · Rendal mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+<style>
+  :root {
+    --void: #0A0A0F;
+    --navy: #0B1E3D;
+    --navy-2: #0F2650;
+    --signal: #2D6CFF;
+    --glow: #5B8DFF;
+    --offwhite: #F5F6FA;
+    --slate: #8B93A7;
+    --line: rgba(245, 246, 250, 0.10);
+    --line-soft: rgba(245, 246, 250, 0.06);
+    --display: "Space Grotesk", ui-sans-serif, sans-serif;
+    --sans: "Inter", ui-sans-serif, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { color-scheme: dark; }
+  body { background: var(--void); color: var(--offwhite); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  .meta-strip { background: #16161d; color: #9aa1b0; font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; padding: 9px 20px; text-align: center; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+
+  /* In this direction the accent is rationed: nav CTA, waitlist buttons,
+     the recommended tier, and the final band. Everything else is monochrome. */
+
+  nav .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .wordmark { font: 600 18px var(--display); display: flex; align-items: center; gap: 9px; }
+  .wordmark .mark { width: 20px; height: 20px; border: 1.5px solid var(--offwhite); border-radius: 6px; display: grid; place-items: center; }
+  .wordmark .mark::after { content: ""; width: 7px; height: 7px; background: var(--offwhite); border-radius: 2px; }
+  .nav-links { display: flex; align-items: center; gap: 28px; font-size: 14px; color: var(--slate); }
+  .nav-links a:hover { color: var(--offwhite); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 600 14px var(--sans); border-radius: 8px; padding: 11px 20px; cursor: pointer; border: 1px solid transparent; transition: background .15s ease-out; }
+  .btn-primary { background: var(--signal); color: var(--offwhite); }
+  .btn-primary:hover { background: #3A78FF; }
+  .btn-primary:active { transform: translateY(1px); }
+
+  .label { font: 500 11px var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--slate); }
+
+  /* ---------- hero: type carries everything ---------- */
+  .hero { padding: 120px 0 96px; }
+  .kicker { display: flex; align-items: center; gap: 10px; font: 500 11px var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--slate); }
+  .kicker .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); }
+  h1 { font: 700 clamp(44px, 7.2vw, 82px)/1.0 var(--display); letter-spacing: -0.03em; margin-top: 30px; max-width: 900px; }
+  h1 .u { text-decoration: underline; text-decoration-color: var(--signal); text-decoration-thickness: 3px; text-underline-offset: 8px; }
+  .hero p.sub { margin-top: 30px; max-width: 580px; font-size: 17px; line-height: 1.65; color: var(--slate); }
+  .form-row { margin-top: 40px; display: flex; gap: 10px; max-width: 470px; }
+  .form-row input { flex: 1; background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; font: 400 14px var(--sans); color: var(--offwhite); outline: none; }
+  .form-row input::placeholder { color: var(--slate); }
+  .form-row input:focus { border-color: var(--signal); box-shadow: 0 0 0 3px rgba(45,108,255,0.22); }
+  .form-note { margin-top: 11px; font-size: 12px; color: var(--slate); }
+
+  /* chat mockup below hero: monochrome chrome, blue only on Approve */
+  .stage { padding: 0 0 128px; }
+  .chat { max-width: 760px; margin: 0 auto; border: 1px solid var(--line); border-radius: 14px; background: #0D0F16; overflow: hidden; font-size: 13px; box-shadow: 0 40px 80px -48px rgba(0,0,0,0.9); }
+  .chat-top { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--line-soft); }
+  .dots { display: flex; gap: 6px; }
+  .dots span { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.12); }
+  .chat-url { font: 400 11px var(--mono); color: var(--slate); }
+  .chat-url b { color: rgba(245,246,250,0.85); font-weight: 500; }
+  .model-pill { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; font: 500 11.5px var(--mono); }
+  .model-pill .rest { color: var(--slate); }
+  .chat-body { padding: 20px 18px 18px; display: flex; flex-direction: column; gap: 14px; }
+  .msg-user { align-self: flex-end; max-width: 75%; background: rgba(245,246,250,0.07); border-radius: 12px 3px 12px 12px; padding: 10px 13px; }
+  .msg-ai { display: flex; gap: 10px; max-width: 92%; }
+  .avatar { flex-shrink: 0; width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--line); color: var(--offwhite); display: grid; place-items: center; font-size: 12px; }
+  .msg-ai .bubble { background: rgba(245,246,250,0.04); border-radius: 3px 12px 12px 12px; padding: 10px 13px; color: rgba(245,246,250,0.95); }
+  .diff { margin-top: 10px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: rgba(10,10,15,0.6); }
+  .diff-head { display: flex; justify-content: space-between; padding: 7px 11px; border-bottom: 1px solid var(--line-soft); font: 400 10.5px var(--mono); color: var(--slate); }
+  .diff-row { display: grid; grid-template-columns: 70px 1fr; gap: 12px; padding: 8px 11px; font-size: 12px; border-bottom: 1px solid var(--line-soft); }
+  .diff-row .k { color: var(--slate); }
+  .diff-row .v { font-family: var(--mono); font-size: 11.5px; }
+  .old { color: var(--slate); text-decoration: line-through; }
+  .arrow { color: var(--slate); margin: 0 7px; }
+  .tag-add { border: 1px solid var(--line); color: var(--offwhite); font: 500 10.5px var(--mono); border-radius: 4px; padding: 2px 6px; }
+  .diff-foot { display: flex; align-items: center; justify-content: space-between; padding: 8px 11px; background: rgba(245,246,250,0.03); font-size: 11px; color: var(--slate); }
+  .diff-foot .actions { display: flex; gap: 8px; }
+  .btn-ghost-sm { border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; font-size: 11px; color: rgba(245,246,250,0.85); background: transparent; }
+  .btn-approve-sm { background: var(--signal); border: none; border-radius: 6px; padding: 4px 10px; font: 600 11px var(--sans); color: var(--offwhite); }
+
+  h2 { font: 700 clamp(32px, 4.4vw, 52px)/1.06 var(--display); letter-spacing: -0.025em; margin-top: 18px; }
+
+  /* ---------- features: pure type stack, whitespace only ---------- */
+  .features { padding: 0 0 128px; }
+  .feat { margin-top: 72px; max-width: 720px; }
+  .feat:first-of-type { margin-top: 64px; }
+  .feat-title { font: 600 clamp(24px, 3vw, 34px)/1.15 var(--display); letter-spacing: -0.02em; }
+  .feat-body { margin-top: 14px; color: var(--slate); font-size: 16px; line-height: 1.7; max-width: 620px; }
+
+  /* ---------- pricing: horizontal rules only ---------- */
+  .pricing-sec { padding: 0 0 128px; }
+  .price-note { margin-top: 18px; color: var(--slate); font-size: 16px; max-width: 620px; line-height: 1.65; }
+  .table-scroll { margin-top: 64px; overflow-x: auto; }
+  table.pricing { width: 100%; border-collapse: collapse; min-width: 860px; }
+  .pricing th, .pricing td { text-align: left; padding: 22px 24px 22px 0; font-weight: 400; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .pricing thead th { vertical-align: bottom; border-bottom: 1px solid rgba(245,246,250,0.25); }
+  .pricing .rowlabel { color: var(--slate); font-size: 13px; width: 140px; }
+  .pricing td { font-size: 14px; line-height: 1.6; color: rgba(245,246,250,0.92); }
+  .tier-name { font: 600 16px var(--display); display: flex; align-items: center; gap: 8px; }
+  .tier-name .rec-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); }
+  .rec-note { font: 500 10.5px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--glow); margin-bottom: 10px; }
+  .tier-price { font: 600 34px var(--mono); margin-top: 10px; letter-spacing: -0.02em; }
+  .tier-price small { font: 400 12px var(--sans); color: var(--slate); margin-left: 3px; }
+  .tier-tag { margin-top: 10px; font-size: 13px; color: var(--slate); line-height: 1.5; }
+  .fineprint { margin-top: 30px; font: 400 12px var(--mono); color: var(--slate); }
+
+  /* ---------- FAQ: narrow centered column ---------- */
+  .faq { padding: 0 0 128px; }
+  .faq-col { max-width: 680px; margin: 0 auto; }
+  .faq-col h2 { margin-top: 18px; }
+  details { border-bottom: 1px solid var(--line); }
+  .faq-list { margin-top: 48px; border-top: 1px solid var(--line); }
+  summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 26px 0; font: 600 18px var(--display); letter-spacing: -0.01em; }
+  summary::-webkit-details-marker { display: none; }
+  summary .ind { flex-shrink: 0; color: var(--slate); font: 400 18px var(--sans); transition: transform .18s ease-out; }
+  details[open] summary .ind { transform: rotate(45deg); }
+  details .answer { padding: 0 44px 26px 0; color: var(--slate); font-size: 15px; line-height: 1.75; }
+  summary:focus-visible { outline: 2px solid var(--signal); outline-offset: 4px; border-radius: 4px; }
+  .see-all { display: inline-flex; align-items: center; gap: 7px; margin-top: 28px; font-size: 14px; font-weight: 500; color: var(--offwhite); border-bottom: 1px solid var(--signal); padding-bottom: 2px; }
+
+  /* ---------- final CTA: the one loud moment ---------- */
+  .cta-band { background: var(--signal); color: var(--offwhite); padding: 96px 0; }
+  .cta-band .inner { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,420px); gap: 56px; align-items: center; }
+  .cta-band .label { color: rgba(245,246,250,0.75); }
+  .cta-band h2 { color: #fff; }
+  .cta-band p { margin-top: 14px; color: rgba(245,246,250,0.85); font-size: 15px; max-width: 400px; line-height: 1.6; }
+  .cta-band input { flex: 1; background: rgba(10,10,15,0.25); border: 1px solid rgba(245,246,250,0.35); border-radius: 8px; padding: 13px 15px; font: 400 14px var(--sans); color: #fff; outline: none; }
+  .cta-band input::placeholder { color: rgba(245,246,250,0.7); }
+  .cta-band input:focus { border-color: #fff; box-shadow: 0 0 0 3px rgba(245,246,250,0.25); }
+  .btn-inverse { background: var(--void); color: var(--offwhite); }
+  .btn-inverse:hover { background: #16161d; }
+
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .cta-band .inner { grid-template-columns: 1fr; gap: 32px; }
+    .hero { padding-top: 72px; }
+  }
+</style>
+</head>
+<body>
+<div class="meta-strip">Mockup · Direction C — “Signal” · typographic monochrome, accent rationed to a few moments</div>
+
+<nav><div class="wrap nav-inner">
+  <a class="wordmark" href="#"><span class="mark"></span>Rendal</a>
+  <div class="nav-links">
+    <a href="#">Pricing</a><a href="#">Help</a>
+    <a class="btn btn-primary" href="#">Get early access</a>
+  </div>
+</div></nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero"><div class="wrap">
+  <div class="kicker"><span class="dot"></span>Now taking early access</div>
+  <h1>An AI co-founder that lives <span class="u">inside your Shopify admin</span>.</h1>
+  <p class="sub">Chat with Claude, GPT, and Gemini in one thread. Rendal can actually change your store — products, inventory, shipping, discounts, theme code — but every action waits for your approval before it saves.</p>
+  <div class="form-row">
+    <input type="email" placeholder="you@store.com" />
+    <button class="btn btn-primary">Join the waitlist</button>
+  </div>
+  <div class="form-note">Early access only — the Shopify app isn’t installable yet.</div>
+</div></header>
+
+<!-- product proof, full-width stage under the hero -->
+<div class="stage"><div class="wrap">
+  <div class="chat" role="img" aria-label="Rendal chat mockup">
+    <div class="chat-top">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span class="chat-url">admin.shopify.com <b>/ rendal</b></span>
+      </div>
+      <span class="model-pill">Claude 4 <span class="rest">· GPT · Gemini ▾</span></span>
+    </div>
+    <div class="chat-body">
+      <div class="msg-user">Bump the price of the “Everyday Tote” by 10% and add a “summer” tag to it.</div>
+      <div class="msg-ai">
+        <span class="avatar">✦</span>
+        <div>
+          <div class="bubble">I’ll update <b>Everyday Tote</b> — new price and a new tag. Review the change below before I save it.</div>
+          <div class="diff">
+            <div class="diff-head"><span>proposed change · products</span><span>1 field · 1 tag</span></div>
+            <div class="diff-row"><span class="k">price</span><span class="v"><span class="old">$38.00</span><span class="arrow">→</span>$41.80</span></div>
+            <div class="diff-row" style="border-bottom:none;"><span class="k">tags</span><span class="v"><span class="tag-add">+ summer</span></span></div>
+            <div class="diff-foot"><span>Nothing has been saved yet.</span>
+              <span class="actions"><button class="btn-ghost-sm">Discard</button><button class="btn-approve-sm">✓ Approve change</button></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ============ FEATURES: type stack ============ -->
+<section class="features"><div class="wrap">
+  <div class="label">What Rendal does</div>
+  <h2>Three things, done well.</h2>
+  <div class="feat">
+    <div class="feat-title">One chat, three models.</div>
+    <p class="feat-body">Ask a question with Claude, then switch to GPT for a plan, then Gemini for a rewrite — all in the same conversation. Pick the right brain for the job without losing context.</p>
+  </div>
+  <div class="feat">
+    <div class="feat-title">Nothing saves without your nod.</div>
+    <p class="feat-body">Rendal can edit products, inventory, shipping, discounts, even theme code — but every change lands in a review card first. Approve it, tweak it, or throw it out.</p>
+  </div>
+  <div class="feat">
+    <div class="feat-title">Your own skills, on demand.</div>
+    <p class="feat-body">Upload instruction files your team uses — restock playbooks, tone-of-voice guides, seasonal checklists — and trigger them by typing “/”. Rendal follows them like a teammate who read the docs.</p>
+  </div>
+</div></section>
+
+<!-- ============ PRICING: horizontal rules only ============ -->
+<section class="pricing-sec"><div class="wrap">
+  <div class="label">Pricing</div>
+  <h2>Straightforward tiers.<br />Same rate above your plan.</h2>
+  <p class="price-note">Included usage resets every month. If you go over, additional usage is billed at the same rate as what’s already in your plan — never at a marked-up premium.</p>
+
+  <div class="table-scroll">
+  <table class="pricing">
+    <thead>
+      <tr>
+        <th class="rowlabel"></th>
+        <th><div class="tier-name">Starter</div><div class="tier-price">$19.99<small>/mo</small></div><div class="tier-tag">Try Rendal on a single store.</div></th>
+        <th><div class="rec-note">Recommended</div><div class="tier-name"><span class="rec-dot"></span>Growth</div><div class="tier-price">$49.99<small>/mo</small></div><div class="tier-tag">Switch models mid-conversation.</div></th>
+        <th><div class="tier-name">Scale</div><div class="tier-price">$149.99<small>/mo</small></div><div class="tier-tag">For teams running the store day to day.</div></th>
+        <th><div class="tier-name">Founder</div><div class="tier-price">$299.99<small>/mo</small></div><div class="tier-tag">Everything unlocked.</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="rowlabel">Model access</td>
+        <td>Standard models only</td>
+        <td>Standard models + full switching across Claude, GPT, and Gemini</td>
+        <td>All Growth models + premium models for heavier reasoning</td>
+        <td>All Scale models + flagship models when you need them</td>
+      </tr>
+      <tr>
+        <td class="rowlabel">Included usage</td>
+        <td>A modest monthly credit pool for light, day-to-day chat.</td>
+        <td>Enough credits for a working merchant who leans on Rendal weekly.</td>
+        <td>Roughly 3× the Growth pool — enough for daily hands-on work.</td>
+        <td>The largest included pool, for merchants using Rendal like a co-founder.</td>
+      </tr>
+      <tr>
+        <td class="rowlabel">Extra usage</td>
+        <td>Same rate as included — no markup.</td>
+        <td>Same rate as included — no markup.</td>
+        <td>Same rate as included — no markup.</td>
+        <td>Same rate as included — no markup.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="fineprint">Prices in USD. Billed monthly. Cancel any time.</div>
+</div></section>
+
+<!-- ============ HOME FAQ: narrow centered ============ -->
+<section class="faq"><div class="wrap faq-col">
+  <div class="label">Common questions</div>
+  <h2>Before you join.</h2>
+  <div class="faq-list">
+    <details open>
+      <summary>What is Rendal, exactly? <span class="ind">+</span></summary>
+      <div class="answer">Rendal is an AI co-founder that lives inside your Shopify admin as an embedded chat. You can ask it to do things — update a product, adjust inventory, tweak a discount, edit theme code — and it will propose the change as a reviewable card. Nothing hits your store until you approve it.</div>
+    </details>
+    <details>
+      <summary>How exactly does the approval step work? <span class="ind">+</span></summary>
+      <div class="answer">Anytime Rendal wants to write to your store, it shows you a compact diff: which record, which fields, what's changing, and why. You can approve it, edit the proposed change first, or discard it.</div>
+    </details>
+    <details>
+      <summary>Which Shopify plans does it work with? <span class="ind">+</span></summary>
+      <div class="answer">Rendal works with any paid Shopify plan that supports embedded admin apps — Basic, Shopify, Advanced, and Plus.</div>
+    </details>
+    <details>
+      <summary>What happens if I use more than my plan includes? <span class="ind">+</span></summary>
+      <div class="answer">Nothing dramatic. Once your included usage runs out, additional usage is billed at the same rate as what's already in your plan — there's no premium markup and no surprise bill at the end of the month.</div>
+    </details>
+  </div>
+  <a class="see-all" href="#">See all FAQs →</a>
+</div></section>
+
+<!-- ============ FINAL CTA: the loud moment ============ -->
+<section class="cta-band"><div class="wrap inner">
+  <div>
+    <div class="label">Waitlist</div>
+    <h2>Get Rendal the day it opens.</h2>
+    <p>We’ll email you when the Shopify app is live — no drip campaigns, no marketing spam.</p>
+  </div>
+  <div>
+    <div class="form-row" style="margin:0;">
+      <input type="email" placeholder="you@store.com" />
+      <button class="btn btn-inverse">Join the waitlist</button>
+    </div>
+  </div>
+</div></section>
+
+</body>
+</html>

@@ -1,0 +1,398 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * Theme: dark AI-agent aesthetic (MagicUI Agent template direction) —
+ * zinc-dark ground, near-black cards, white primary buttons, one vivid
+ * blue accent (--secondary), Geist / Geist Mono type. Dark-only: the site
+ * ships a single theme and no toggle by design.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ * All colors MUST use oklch format.
+ *
+ * Note on roles: --primary is WHITE (buttons/emphasis on dark), the blue
+ * accent lives in --secondary. Use text-secondary/bg-secondary for the
+ * blue highlights, btn-cta for the white primary button.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  /* Deep panel (final CTA block) */
+  --color-espresso: var(--espresso);
+  --color-espresso-foreground: var(--espresso-foreground);
+  /* Legacy brand aliases — keep old utilities rendering on the new theme */
+  --color-void: var(--background);
+  --color-navy: var(--card);
+  --color-navy-2: var(--accent);
+  --color-signal: var(--secondary);
+  --color-glow: var(--secondary);
+  --color-offwhite: var(--foreground);
+  --color-slate-muted: var(--muted-foreground);
+  --font-display: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+:root {
+  --radius: 0.625rem;
+
+  --background: oklch(0.2103 0.006 285.89);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.5465 0.246 262.87);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.2739 0.005 286.03);
+  --accent-foreground: oklch(0.9846 0.002 247.84);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+
+  --espresso: oklch(0.145 0 0);
+  --espresso-foreground: oklch(0.985 0 0);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  html {
+    color-scheme: dark;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+@utility font-mono-brand {
+  font-family: var(--font-mono);
+}
+
+/* Primary CTA: white button on dark (template's primary action style) */
+@utility btn-cta {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: 1px solid transparent;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  transition:
+    opacity 0.15s var(--tw-ease, cubic-bezier(0.4, 0, 0.2, 1)),
+    transform 0.12s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    opacity: 0.88;
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Accent CTA: the template's vivid blue action */
+@utility btn-accent {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border: 1px solid transparent;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.35),
+    0 8px 24px -10px oklch(0.5465 0.246 262.87 / 0.55);
+  transition:
+    filter 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    filter: brightness(1.1);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+}
+/* Back-compat: old class name used before the retheme */
+@utility btn-signal {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border: 1px solid transparent;
+  &:hover {
+    filter: brightness(1.1);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Quiet panel: near-black card on zinc ground, hairline border */
+@utility panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+/* Back-compat alias for the retired glass utility */
+@utility card-surface {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* Glass card (pricing surfaces): dark glass over the glow field */
+@utility glass-card {
+  background: oklch(0.145 0 0 / 0.55);
+  border: 1px solid oklch(1 0 0 / 0.1);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 40px -18px rgba(0, 0, 0, 0.6);
+}
+
+/* Dot-grid decoration, fades out toward edges */
+@utility dot-grid {
+  background-image: radial-gradient(oklch(1 0 0 / 0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 65% 65% at 50% 50%, black 30%, transparent 75%);
+}
+
+/* Animated blue glow field behind pricing (transform/opacity only) */
+@keyframes rendal-aurora-a {
+  0% {
+    transform: translate3d(-8%, -4%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(10%, 8%, 0) scale(1.15);
+  }
+  100% {
+    transform: translate3d(-8%, -4%, 0) scale(1);
+  }
+}
+@keyframes rendal-aurora-b {
+  0% {
+    transform: translate3d(6%, 10%, 0) scale(1.1);
+  }
+  50% {
+    transform: translate3d(-10%, -6%, 0) scale(0.95);
+  }
+  100% {
+    transform: translate3d(6%, 10%, 0) scale(1.1);
+  }
+}
+.aurora-blob-a,
+.aurora-blob-b {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  will-change: transform;
+}
+.aurora-blob-a {
+  background: oklch(0.5465 0.246 262.87 / 0.16);
+  animation: rendal-aurora-a 26s ease-in-out infinite;
+}
+.aurora-blob-b {
+  background: oklch(0.488 0.243 264.376 / 0.12);
+  animation: rendal-aurora-b 32s ease-in-out infinite;
+}
+
+/* Marquee for the model-family strip */
+@keyframes rendal-marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: rendal-marquee 28s linear infinite;
+}
+
+/* Orbit (MagicUI signature): elements circling a center */
+@keyframes rendal-orbit {
+  from {
+    transform: rotate(0deg) translateY(calc(var(--orbit-radius) * -1)) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateY(calc(var(--orbit-radius) * -1)) rotate(-360deg);
+  }
+}
+.orbit-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -16px 0 0 -16px;
+  animation: rendal-orbit var(--orbit-duration, 24s) linear infinite;
+  animation-delay: var(--orbit-delay, 0s);
+  will-change: transform;
+}
+
+/* Nav entrance: slides down and settles */
+@keyframes rendal-nav-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.nav-in {
+  animation: rendal-nav-in 0.5s cubic-bezier(0, 0, 0.2, 1) both;
+}
+
+/* Entrance motion */
+@keyframes rendal-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition:
+    opacity 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+.fade-up-in {
+  animation: rendal-rise 0.55s cubic-bezier(0, 0, 0.2, 1) both;
+}
+.hero-mockup-in {
+  animation: rendal-rise 0.6s cubic-bezier(0, 0, 0.2, 1) both;
+  animation-delay: 0.18s;
+}
+
+/* Card hover lift (transform-only) */
+.lift {
+  transition:
+    transform 0.22s cubic-bezier(0, 0, 0.2, 1),
+    box-shadow 0.22s cubic-bezier(0, 0, 0.2, 1),
+    border-color 0.22s cubic-bezier(0, 0, 0.2, 1);
+}
+.lift:hover {
+  transform: translateY(-3px);
+  border-color: oklch(1 0 0 / 0.18);
+}
+
+/* Mobile menu open/close (grid-rows + opacity) */
+.mobile-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.28s cubic-bezier(0, 0, 0.2, 1),
+    opacity 0.22s cubic-bezier(0, 0, 0.2, 1);
+}
+.mobile-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.mobile-panel > * {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .fade-up-in,
+  .hero-mockup-in,
+  .nav-in {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .aurora-blob-a,
+  .aurora-blob-b,
+  .marquee-track,
+  .orbit-item {
+    animation: none !important;
+  }
+  .lift,
+  .lift:hover {
+    transition: none !important;
+    transform: none !important;
+  }
+  .mobile-panel {
+    transition: none !important;
+  }
+}
