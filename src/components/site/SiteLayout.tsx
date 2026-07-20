@@ -4,14 +4,37 @@ import { Footer } from "./Footer";
 import { NeuralNoise } from "@/components/ui/neural-noise";
 
 export function SiteLayout({ children }: { children: ReactNode }) {
-  // Respect prefers-reduced-motion: keep the background video on its first
-  // frame instead of playing.
   const videoRef = useRef<HTMLVideoElement | null>(null);
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    // React doesn't reliably mirror the `muted` prop onto the DOM node, and
+    // mobile browsers (notably iOS Safari) block autoplay unless the element
+    // is genuinely muted at play() time — so set it imperatively.
+    video.muted = true;
+
+    // Respect prefers-reduced-motion: hold the first frame instead of playing.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      videoRef.current?.pause();
+      video.pause();
+      return;
     }
+
+    // Some mobile browsers ignore the `autoPlay` attribute and only start
+    // playback from a scripted play() call.
+    const play = () => {
+      void video.play().catch(() => {});
+    };
+    play();
+
+    // Fallback loop: native `loop` can stutter or leave the last frame frozen,
+    // so restart from the top whenever playback reaches the end.
+    const handleEnded = () => {
+      video.currentTime = 0;
+      play();
+    };
+    video.addEventListener("ended", handleEnded);
+    return () => video.removeEventListener("ended", handleEnded);
   }, []);
 
   return (
@@ -27,6 +50,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           muted
           loop
           playsInline
+          preload="auto"
           tabIndex={-1}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background/85" />
